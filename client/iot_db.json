@@ -1,0 +1,1 @@
+{"plc_table": {"1": {"ip_address": "192.168.11.1", "rack": 1, "slot": 2, "active": false}, "2": {"ip_address": "192.168.11.2", "rack": 1, "slot": 2, "active": true}}}
