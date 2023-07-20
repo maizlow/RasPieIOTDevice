@@ -1,6 +1,6 @@
 from tinydb import TinyDB
 from tinydb import Query
-from models.plc_model import PLC_Model
+from models.plc import PLC_Model
 
 
 db_name = "iot_db.json"
