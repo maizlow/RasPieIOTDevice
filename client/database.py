@@ -1,6 +1,5 @@
 from tinydb import TinyDB
 from tinydb import Query
-from models.plc import PLC_Model
 
 
 db_name = "iot_db.json"
@@ -14,9 +13,10 @@ class DB:
     _db_data = type(TinyDB)
 
     def __init__(self) -> None:
-        self._db_plc = TinyDB(db_name).table(plc_table_name)
-        self._db_tags = TinyDB(db_name).table(tags_table_name)
-        self._db_data = TinyDB(db_name).table(data_table_name)
+        self.db = TinyDB(db_name)
+        self._db_plc = self.db.table(plc_table_name)
+        self._db_tags = self.db.table(tags_table_name)
+        self._db_data = self.db.table(data_table_name)
 
 
 #region PLC
@@ -55,24 +55,26 @@ class DB:
     def getAllTags(self):
         return self._db_tags.all()
     
+    def getTagsForPLC(self, PLC_IP):
+        q = Query()
+        return self._db_tags.search(q.PLC_IP == PLC_IP)
+
     #Have to be all tags at once
-    def insertTags(self, items):
+    def dropAndInsertTags(self, items):
         if items:
             tag = Query()
-            #Delete all tags then insert new tags
-            self._db_tags.remove(tag.id > 0)
-            if self._db_tags.count(tag.id > 0):
-                self._db_tags.insert_multiple(items)
-                if self._db_tags.count(tag.id > 0) == 0:
-                    print("Failed to insert tags!")
-                else:
-                    return True
+            #Delete all tags then insert new tags            
+            self.db.drop_table(tags_table_name)
+            if tags_table_name in self.db.tables():
+                 print("Failed to drop tag table before insertion!")
+                 return False
+            
+            if len(self._db_tags.insert_multiple(items)) > 0:
+                print("Success!")
+                return True
             else:
-                print("Failed to delete tags before insertions!")
-                return False
-        else:
-            print("No tags to function!")
-        return False
+                print(self.db.tables())
+
 
             
 #endregion    

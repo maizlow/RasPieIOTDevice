@@ -13,11 +13,15 @@ received_all_event = threading.Event()
 
 # Callback when connection is accidentally lost.
 def on_connection_interrupted(connection, error, **kwargs):
+    global isConnected
+    isConnected = False
     print("Connection interrupted. error: {}".format(error))
 
 
 # Callback when an interrupted connection is re-established.
 def on_connection_resumed(connection, return_code, session_present, **kwargs):
+    global isConnected
+    isConnected = True
     print("Connection resumed. return_code: {} session_present: {}".format(return_code, session_present))
 
     if return_code == mqtt.ConnectReturnCode.ACCEPTED and not session_present:
@@ -50,17 +54,23 @@ def on_resubscribe_complete(resubscribe_future):
 # Callback when the connection successfully connects
 def on_connection_success(connection, callback_data):
     assert isinstance(callback_data, mqtt.OnConnectionSuccessData)
+    global isConnected
+    isConnected = True
     print("Connection Successful with return code: {} session present: {}".format(callback_data.return_code, callback_data.session_present))
 
 
 # Callback when a connection attempt fails
 def on_connection_failure(connection, callback_data):
     assert isinstance(callback_data, mqtt.OnConnectionFailuredata)
+    global isConnected
+    isConnected = False
     print("Connection failed with error code: {}".format(callback_data.error))
 
 
 # Callback when a connection has been disconnected or shutdown successfully
 def on_connection_closed(connection, callback_data):
+    global isConnected
+    isConnected = False
     print("Connection closed")
 
 async def connect_mqtt():
@@ -90,6 +100,8 @@ async def connect_mqtt():
     # Future.result() waits until a result is available
     connect_future.result()
     print("Connected!")
+    global isConnected
+    isConnected = True
     return connection
 
 async def disconnect_mqtt(connection):
@@ -97,6 +109,8 @@ async def disconnect_mqtt(connection):
     print("Disconnecting...")
     disconnect_future = connection.disconnect()
     disconnect_future.result()
+    global isConnected
+    isConnected = False
     print("Disconnected!")
 
 async def subscribe_to_topic(connection, topic, callback_on_message_recieved):

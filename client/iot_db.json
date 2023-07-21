@@ -1,1 +1,35 @@
-{"plc_table": {"1": {"ip_address": "192.168.11.4", "rack": 1, "slot": 2, "active": true}, "2": {"ip_address": "192.168.11.51", "rack": 1, "slot": 2, "active": false}}}
+{
+  "plc_table": {
+    "1": { "ip_address": "192.168.11.4", "rack": 1, "slot": 2, "active": true },
+    "2": { "ip_address": "192.168.11.51", "rack": 1, "slot": 2, "active": true }
+  },
+  "tags_table": {
+    "1": {
+      "id": 1,
+      "db-nr": 2,
+      "start-address": 0,
+      "data-type": 7,
+      "log-interval": 1,
+      "batch-interval": 2,
+      "PLC_IP": "192.168.11.51"
+    },
+    "2": {
+      "id": 2,
+      "db-nr": 2,
+      "start-address": 4,
+      "data-type": 7,
+      "log-interval": 10,
+      "batch-interval": 2,
+      "PLC_IP": "192.168.11.51"
+    },
+    "3": {
+      "id": 3,
+      "db-nr": 2,
+      "start-address": 8,
+      "data-type": 7,
+      "log-interval": 2,
+      "batch-interval": 2,
+      "PLC_IP": "192.168.11.51"
+    }
+  }
+}
