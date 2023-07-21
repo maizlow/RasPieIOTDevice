@@ -1,0 +1,21 @@
+[
+  {
+    "_id": { "$oid": "63a4f24aa29226ac0d855551" },
+    "db-nr": 2,
+    "start-address": 0,
+    "data-type": 7,
+    "log-interval": 1,
+    "batch-interval": 2,
+    "PLC_Id": { "$oid": "63a4f24aa29226ac0d85084b" }
+  },
+  {
+    "_id": { "$oid": "63a4f24aa29226ac0d855552" },
+    "db-nr": 2,
+    "start-address": 4,
+    "data-type": 7,
+    "log-interval": 10,
+    "batch-interval": 2,
+    "PLC_Id": { "$oid": "63a4f24aa29226ac0d85084b" }
+  }
+]
+
