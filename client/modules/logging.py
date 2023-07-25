@@ -62,7 +62,7 @@ class Logging(object):
                     tag.next_logging = now + tag.log_interval
                     
                     print(f"Logging tag, DB={tag.db_nr}, Start address={tag.start_address}, Data type={tag.data_type} from PLC with IP: {tag.PLC_IP}")
- 
+                    
                     #Read tag with snap7 and log to database
                     value = self.plc_com.read_db_dint(tag.db_nr, tag.start_address)
                     if value:

@@ -122,6 +122,10 @@ async def main():
                     tag_update = False
                     plc_update = False
 
+                for log in logging:
+                    if not log.plc_info.checkConnection():
+                        print(f"{log.plc['ip_address']}PLC is disconnected...")
+
                 #Check if tags are logged and publish them to AWS
                 if aws_mqtt.isConnected:
                     loggedTags = db.getUnpublishedDatapoints()

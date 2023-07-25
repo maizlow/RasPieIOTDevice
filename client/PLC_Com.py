@@ -7,6 +7,7 @@ class PLC_Com():
 
     def __init__(self, plc_info: Plc):
         self.plc_info = plc_info
+        self.isConnected = False
 
     def connect(self):
         print(f"Connecting to PLC with IP: {self.plc_info.ip} -> Rack: {self.plc_info.rack} -> Slot: {self.plc_info.slot}")
@@ -17,7 +18,8 @@ class PLC_Com():
             print("Failed to connect to PLC! Retrying...")
         
         timeout = time.time() + 3 #3 second timeout
-        while not self.client.get_connected():
+        retries = 1
+        while not self.checkConnection():
             if time.time() > timeout:
                 try:
                     self.client.connect(
@@ -26,17 +28,20 @@ class PLC_Com():
                     print("Failed to connect to PLC! Retrying...")
                     #Add another 3 seconds
                     timeout = time.time() + 3
-            print(f"Retrying again in {math.floor(timeout - time.time())}s")
+            print(f"Retry attempt nr {retries} in {math.floor(timeout - time.time())}s")
             time.sleep(1)
+            retries += 1
             
-        if self.client.get_connected():
+        if self.checkConnection():
             print(f"Connected to plc with IP: {self.plc_info.ip}")
-        else:
-            print("Connection timed out and failed!")
-            self.client.destroy()
+            self.isConnected = True
+        
+
+    def checkConnection(self):
+        return str(self.client.get_cpu_state()) == "S7CpuStatusRun"
 
     def read_db_dint(self, dbNumber, byteOffset):
-        if self.client.get_connected():
+        if self.checkConnection():
             read = self.client.db_read(dbNumber, byteOffset, 4)
             if read:               
                 return snap7.util.get_dint(read, 0)
