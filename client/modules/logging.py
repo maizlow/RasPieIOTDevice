@@ -73,7 +73,7 @@ class Logging(object):
                         elif tag.data_type == DataType.String:
                             value = self.plc_com.read_db_string(tag.db_nr, tag.start_address)
                         else:
-                            value = self.plc_com.read_db_value(tag.db_nr, tag.start_address, tag.bit_nr, tag.getByteLength(tag.data_type), tag.data_type)
+                            value = self.plc_com.read_db_value(tag.db_nr, tag.start_address, tag.getByteLength(tag.data_type), tag.data_type)
                         
                         if value:
                             self.db.insertDataPoint(tag._id, value, now)
