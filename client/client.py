@@ -123,6 +123,7 @@ async def main():
                     plc_update = False
 
                 for log in logging:
+                    print(log.plc_info.checkConnection())
                     if not log.plc_info.checkConnection():
                         print(f"{log.plc['ip_address']}PLC is disconnected...")
 
