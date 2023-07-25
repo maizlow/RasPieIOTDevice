@@ -16,7 +16,7 @@ class Logging(object):
         self.is_running = True
         self.lock_request = False
         self.lock_active = False
-        self.plc_com = PLC_Com(plc)
+        self.plc_com = PLC_Com(self.plc)
         self.plc_com.connect()        
     
     def Stop(self):
