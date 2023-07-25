@@ -10,11 +10,12 @@ class PLC_Com():
 
     def connect(self):
         print(f"Connecting to PLC with IP: {self.plc_info.ip} -> Rack: {self.plc_info.rack} -> Slot: {self.plc_info.slot}")
-        err = self.client.connect(
-            self.plc_info.ip, self.plc_info.rack, self.plc_info.slot)
-        if err:
-            print(f"Failed to connect, error code: {str(err)}")
-            exit()
+        try:
+            self.client.connect(
+                self.plc_info.ip, self.plc_info.rack, self.plc_info.slot)
+        except:
+            print(f"Failed to connect, error code: {self.client.error_text(self.client.get_last_error())}")            
+            exit()        
         
         timed_out = False
         timeout = time.time() + 3 #3 second timeout
