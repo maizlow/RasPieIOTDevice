@@ -40,7 +40,7 @@ def new_plc_message(topic, payload):
     if logging_active:
         plc_update = True
     if "delete" in topic:
-        if db.deletePLC(payload):
+        if db.deletePLC(payload["ip_address"]):
             print("Successfully removed PLC with IP-address: ", payload["ip_address"])
         else:
             print("Failed to remove PLC with IP-address: '{}' No PLC found with this ip-address!".format(payload["ip_address"]))
