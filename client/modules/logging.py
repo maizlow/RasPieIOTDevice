@@ -65,7 +65,7 @@ class Logging(object):
                     tag.next_logging = now + tag.log_interval
                     
                     print(f"Logging tag, DB={tag.db_nr}, Start address={tag.start_address}, Data type={tag.data_type} from PLC with IP: {tag.PLC_IP}")
-                    print(f"Size is: {self.getByteLength(tag.data_type)}")
+                    print(f"Size is: {self.getByteLength(tag.data_type)} Data type is: {tag.data_type}")
                     if self.plc_com.checkConnection() and False:
                         #Read tag with snap7 and log to database
                         if tag.data_type == DataType.Bit:
