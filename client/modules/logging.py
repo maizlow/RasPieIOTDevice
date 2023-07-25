@@ -55,7 +55,6 @@ class Logging(object):
         print("Tag list is prepared for logging!")
 
     def Logging(self):
-        print(f"{self.plc} Tag list length: {len(self.tags)}")
         while self.is_running:      
             if not self.plc_com.checkConnection():
                 self.plc_com.connect()
@@ -66,7 +65,7 @@ class Logging(object):
                     tag.next_logging = now + tag.log_interval
                     
                     print(f"Logging tag, DB={tag.db_nr}, Start address={tag.start_address}, Data type={tag.data_type} from PLC with IP: {tag.PLC_IP}")
-                    print(tag.getByteLength(tag.data_type))
+                    print(f"Size is: {self.getByteLength(tag.data_type)}")
                     if self.plc_com.checkConnection() and False:
                         #Read tag with snap7 and log to database
                         if tag.data_type == DataType.Bit:
@@ -89,3 +88,25 @@ class Logging(object):
             #While updating the tag list stop the looping above until done
             while self.lock_request:
                 self.lock_active = True
+
+    def getByteLength(self, dataType : int) -> int:
+        """Returns number of bytes to read depending on data type.
+        """
+        if dataType == DataType.Bit: 
+            return 1
+        elif dataType == DataType.Byte: 
+            return 1
+        elif dataType == DataType.Char: 
+            return 1
+        elif dataType == DataType.Word: 
+            return 2
+        elif dataType == DataType.Int: 
+            return 2
+        elif dataType == DataType.DWord: 
+            return 4
+        elif dataType == DataType.DInt: 
+            return 4
+        elif dataType == DataType.Real: 
+            return 4
+        elif dataType == DataType.String: 
+            return 254
