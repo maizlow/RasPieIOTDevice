@@ -3,6 +3,10 @@
 
 #Files
 config.ini
+*.pem
+*.crt
+*.key
+/IOT_Demo_Certs
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
