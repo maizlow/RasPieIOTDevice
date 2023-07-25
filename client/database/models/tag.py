@@ -27,7 +27,7 @@ class Tag():
         self.batch_interval = batchInterval
         self.PLC_IP = PLC_IP
 
-    def getByteLength(dataType : DataType):
+    def getByteLength(self, dataType : DataType):
         """Returns number of bytes to read depending on data type.
         """
         if dataType == DataType.Bit: 

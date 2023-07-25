@@ -3,6 +3,7 @@
     "db_nr": 4,
     "start-address": 0,
     "data-type": 7,
+    "bit_nr": 0,
     "log-interval": 1,
     "batch-interval": 2,
     "PLC_IP": "172.19.33.200"
