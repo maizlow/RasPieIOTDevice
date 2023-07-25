@@ -1,6 +1,6 @@
 from database.models.Plc import Plc
 import snap7
-import time
+import time, math
 
 class PLC_Com():
     client = snap7.client.Client()
@@ -26,8 +26,8 @@ class PLC_Com():
                     print("Failed to connect to PLC! Retrying...")
                     #Add another 3 seconds
                     timeout = time.time() + 3
-            print(f"Retrying again in {timeout - time.time()}s")
-            time.sleep(0.1)
+            print(f"Retrying again in {math.floor(timeout - time.time())}s")
+            time.sleep(1)
             
         if self.client.get_connected():
             print(f"Connected to plc with IP: {self.plc_info.ip}")
