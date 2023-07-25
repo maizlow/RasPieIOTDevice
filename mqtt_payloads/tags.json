@@ -1,56 +1,10 @@
 [
   {
-    "id": 1,
-    "db_nr": 2,
+    "db_nr": 4,
     "start-address": 0,
     "data-type": 7,
     "log-interval": 1,
     "batch-interval": 2,
-    "PLC_IP": "192.168.11.51"
-  },
-  {
-    "id": 2,
-    "db_nr": 2,
-    "start-address": 4,
-    "data-type": 7,
-    "log-interval": 10,
-    "batch-interval": 2,
-    "PLC_IP": "192.168.11.51"
-  },
-  {
-    "id": 3,
-    "db_nr": 2,
-    "start-address": 8,
-    "data-type": 7,
-    "log-interval": 2,
-    "batch-interval": 2,
-    "PLC_IP": "192.168.11.51"
-  },
-{
-    "id": 4,
-    "db_nr": 2,
-    "start-address": 0,
-    "data-type": 7,
-    "log-interval": 1,
-    "batch-interval": 2,
-    "PLC_IP": "192.168.11.4"
-  },
-  {
-    "id": 5,
-    "db_nr": 2,
-    "start-address": 4,
-    "data-type": 7,
-    "log-interval": 10,
-    "batch-interval": 2,
-    "PLC_IP": "192.168.11.4"
-  },
-  {
-    "id": 6,
-    "db_nr": 2,
-    "start-address": 8,
-    "data-type": 7,
-    "log-interval": 2,
-    "batch-interval": 2,
-    "PLC_IP": "192.168.11.4"
+    "PLC_IP": "172.19.33.200"
   }
 ]
