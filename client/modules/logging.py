@@ -1,4 +1,5 @@
 import datetime, random
+import threading
 from datetime import timezone
 from database.models.tag import Tag
 from database.local_db import MongoDB
@@ -62,11 +63,13 @@ class Logging(object):
                     tag.next_logging = now + tag.log_interval
                     
                     print(f"Logging tag, DB={tag.db_nr}, Start address={tag.start_address}, Data type={tag.data_type} from PLC with IP: {tag.PLC_IP}")
-                    
-                    #Read tag with snap7 and log to database
-                    value = self.plc_com.read_db_dint(tag.db_nr, tag.start_address)
-                    if value:
-                        self.db.insertDataPoint(tag._id, value, now)
+                    if self.plc_com.checkConnection():
+                        #Read tag with snap7 and log to database
+                        value = self.plc_com.read_db_dint(tag.db_nr, tag.start_address)
+                        if value:
+                            self.db.insertDataPoint(tag._id, value, now)
+                    else:
+                        print(f"Lost connection to PLC: {self.plc.ip}")
                 else:
                     if tag.next_logging == 0:
                         tag.next_logging = now + tag.log_interval
