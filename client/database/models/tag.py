@@ -1,8 +1,8 @@
 import json
 from datetime import datetime, timezone
-from enum import Enum        
+from enum import IntEnum        
 
-class DataType(Enum):
+class DataType(IntEnum):
     Bit     = 1
     Byte    = 2
     Char    = 3
