@@ -11,7 +11,7 @@ class Logging(object):
         #PLC info finns på varje tagg
         self.tags = []
         self.prepareTaglist(tags) 
-        self.plc = plc
+        self.plc = Plc(plc["_id"], plc["ip_address"], plc["rack"], plc["slot"], plc["active"])
         self.db : MongoDB = db
         self.is_running = True
         self.lock_request = False

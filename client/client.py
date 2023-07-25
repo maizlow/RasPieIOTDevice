@@ -89,7 +89,7 @@ async def main():
                 for plc in plc_list:      
                     tagList = db.getTagsForPLC(plc["ip_address"])
                     if len(list(tagList.clone())) > 0:
-                        log = Logging(tagList, plc["ip_address"], db)
+                        log = Logging(tagList, plc, db)
                         logging.append(log)
                         threads.append(threading.Thread(target=log.Logging, daemon=True))
                         threads[-1].start()
@@ -114,7 +114,7 @@ async def main():
                             #Start logging if new tags or plc found
                             if not logged:
                                 print(f"New thread started for plc with IP: {plc['ip_address']}!")
-                                newlog = Logging(tagList, plc["ip_address"], db)
+                                newlog = Logging(tagList, plc, db)
                                 logging.append(newlog)
                                 threads.append(threading.Thread(target=logging[-1].Logging, daemon=True))
                                 threads[-1].start()
