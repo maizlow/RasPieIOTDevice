@@ -22,6 +22,7 @@ class PLC_Com():
         while not self.checkConnection():
             if time.time() > timeout:
                 try:
+                    retries += 1
                     self.client.connect(
                         self.plc_info.ip, self.plc_info.rack, self.plc_info.slot)
                 except:
@@ -30,7 +31,6 @@ class PLC_Com():
                     timeout = time.time() + 3
             print(f"Retry attempt nr {retries} in {math.floor(timeout - time.time())}s")
             time.sleep(1)
-            retries += 1
             
         if self.checkConnection():
             print(f"Connected to plc with IP: {self.plc_info.ip}")
