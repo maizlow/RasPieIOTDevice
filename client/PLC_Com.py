@@ -1,4 +1,5 @@
 from database.models.Plc import Plc
+from database.models.tag import DataType
 import snap7
 import time, math
 
@@ -40,10 +41,44 @@ class PLC_Com():
     def checkConnection(self):
         return str(self.client.get_cpu_state()) == "S7CpuStatusRun"
 
-    def read_db_dint(self, dbNumber, byteOffset):
+    def read_db_value(self, dbNumber, startByte, byteLength, dataType):
+        """
+        Reads any value from a DB in the connected PLC. For boolean values use read_db_bit.    
+        """
+        if dataType == DataType.Bit or dataType == DataType.String:
+            return None
         if self.checkConnection():
-            read = self.client.db_read(dbNumber, byteOffset, 4)
-            if read:               
-                return snap7.util.get_dint(read, 0)
+            read = self.client.db_read(dbNumber, startByte, byteLength)
+            if read:              
+                if dataType == DataType.Byte: 
+                    return snap7.util.get_byte(read, 0)
+                elif dataType == DataType.Char: 
+                    return snap7.util.get_char(read, 0)
+                elif dataType == DataType.Word: 
+                    return snap7.util.get_word(read, 0)
+                elif dataType == DataType.Int: 
+                    return snap7.util.get_int(read, 0)
+                elif dataType == DataType.DWord: 
+                    return snap7.util.get_dword(read, 0)
+                elif dataType == DataType.DInt: 
+                    return snap7.util.get_dint(read, 0)
+                elif dataType == DataType.Real: 
+                    return snap7.util.get_real(read, 0)
             else:
-                return -1
+                return None
+
+    def read_db_bit(self, dbNumber, startByte, bit):
+        if self.checkConnection():
+            read = self.client.db_read(dbNumber, startByte, 1)
+            if read:              
+                return snap7.util.get_bool(read, 0, bit)
+            else:
+                return None
+            
+    def read_db_string(self, dbNumber, startByte):
+        if self.checkConnection():
+            read = self.client.db_read(dbNumber, startByte, 254)
+            if read:              
+                return snap7.util.get_string(read, 0)
+            else:
+                return None
