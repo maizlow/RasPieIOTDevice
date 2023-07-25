@@ -5,8 +5,10 @@ import config
 class MongoDB():
     def __init__(self) -> None:
         db_config = config.getConfiguredDatabase()
+        usernamePassword = config.getMongoAuth()
         #Initiate client
-        self.client = MongoClient(db_config.ip, db_config.port)
+        conStr = f"mongodb://{usernamePassword[0]}:{usernamePassword[1]}@{db_config.ip}:{db_config.port}"
+        self.client = MongoClient(conStr)
         #Create DB if not exists
         self.db = self.client[db_config.name]
         #Check if collection exists otherwise create
