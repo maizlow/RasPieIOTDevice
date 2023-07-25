@@ -18,7 +18,7 @@ class Logging(object):
         self.lock_request = False
         self.lock_active = False
         self.plc_com = PLC_Com(self.plc)
-        self.plc_com.connect()        
+               
     
     def Stop(self):
         self.is_running = False
@@ -56,6 +56,8 @@ class Logging(object):
     def Logging(self):
         print(f"{self.plc} Tag list length: {len(self.tags)}")
         while self.is_running:      
+            if not self.plc_com.checkConnection():
+                self.plc_com.connect()
             for tag in self.tags:
                 tag : Tag
                 now = datetime.datetime.now(timezone.utc).timestamp()
