@@ -25,8 +25,9 @@ tag_update = False
 
 # Callback when the subscribed topic receives a message
 def on_message_received(topic, payload, dup, qos, retain, **kwargs):
-    print("Received message from topic '{}': {}".format(topic, json.loads(payload)))
-    json_payload = json.loads(payload)
+    #print("Received message from topic '{}': {}".format(topic, json.loads(payload)))
+    print("Received message from topic '{}': {}".format(topic, payload))
+    json_payload = payload #json.loads(payload)
     if TOPIC_PLC_INFO in topic:
         new_plc_message(topic, json_payload)
     elif TOPIC_TAGS in topic:
