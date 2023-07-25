@@ -1,7 +1,7 @@
 import datetime, random
 import threading
 from datetime import timezone
-from database.models.tag import Tag
+from database.models.tag import Tag, DataType
 from database.local_db import MongoDB
 from PLC_Com import PLC_Com
 from database.models.Plc import Plc
@@ -50,7 +50,7 @@ class Logging(object):
             newTag : Tag
             #Exempel på hur man kommer in i de aggregerade datan
             #print(tag['PLC'][0]['IP-address'])
-            newTag = Tag(str(tag["_id"]), tag["db_nr"], tag["start-address"], tag["data-type"], tag["log-interval"], tag["batch-interval"], tag["PLC_IP"])            
+            newTag = Tag(str(tag["_id"]), tag["db_nr"], tag["start-address"], tag["data-type"], tag["bit_nr"], tag["log-interval"], tag["batch-interval"], tag["PLC_IP"])            
             self.tags.append(newTag)
         print("Tag list is prepared for logging!")
 
@@ -68,9 +68,17 @@ class Logging(object):
                     print(f"Logging tag, DB={tag.db_nr}, Start address={tag.start_address}, Data type={tag.data_type} from PLC with IP: {tag.PLC_IP}")
                     if self.plc_com.checkConnection():
                         #Read tag with snap7 and log to database
-                        value = self.plc_com.read_db_dint(tag.db_nr, tag.start_address)
+                        if tag.data_type == DataType.Bit:
+                            value = self.plc_com.read_db_bit(tag.db_nr, tag.start_address, tag.bit_nr)
+                        elif tag.data_type == DataType.String:
+                            value = self.plc_com.read_db_string(tag.db_nr, tag.start_address)
+                        else:
+                            value = self.plc_com.read_db_value(tag.db_nr, tag.start_address, tag.bit_nr, tag.getByteLength(tag.data_type), tag.data_type)
+                        
                         if value:
                             self.db.insertDataPoint(tag._id, value, now)
+                        else:
+                            print("ERROR: Payload not configured correctly, no variable found on PLC with the attributes!")
                     else:
                         print(f"Lost connection to PLC: {self.plc.ip}")
                 else:
