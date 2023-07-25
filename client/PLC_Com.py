@@ -41,13 +41,14 @@ class PLC_Com():
     def checkConnection(self):
         return str(self.client.get_cpu_state()) == "S7CpuStatusRun"
 
-    def read_db_value(self, dbNumber, startByte, byteLength, dataType):
+    def read_db_value(self, dbNumber : int, startByte : int, byteLength : int, dataType : DataType):
         """
         Reads any value from a DB in the connected PLC. For boolean values use read_db_bit.    
         """
         if dataType == DataType.Bit or dataType == DataType.String:
             return None
         if self.checkConnection():
+            print(f"Size: {byteLength}")
             read = self.client.db_read(dbNumber, startByte, byteLength)
             if read:              
                 if dataType == DataType.Byte: 
