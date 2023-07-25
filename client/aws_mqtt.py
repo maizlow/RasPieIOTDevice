@@ -73,17 +73,17 @@ def on_connection_closed(connection, callback_data):
     isConnected = False
     print("Connection closed")
 
-async def connect_mqtt():
+async def connect_mqtt(endpoint, client_id):
     # Create a MQTT connection
     connection = mqtt_connection_builder.mtls_from_path(
-        endpoint=variables.ENDPOINT,
+        endpoint=endpoint,
         port=8883,
         cert_filepath=variables.CERT_FILEPATH,
         pri_key_filepath=variables.PRI_KEY_FILEPATH,
         ca_filepath=variables.CA_FILEPATH,
         on_connection_interrupted=on_connection_interrupted,
         on_connection_resumed=on_connection_resumed,
-        client_id=variables.CLIENT_ID,
+        client_id=client_id,
         clean_session=False,
         keep_alive_secs=60,
         http_proxy_options=None,
@@ -94,7 +94,7 @@ async def connect_mqtt():
     test = 1
     print (test)
     
-    print("Connecting to endpoint with client ID")
+    print(f"Connecting to endpoint: {endpoint}, with client ID: {client_id}")
     connect_future = connection.connect()
 
     # Future.result() waits until a result is available
@@ -124,14 +124,16 @@ async def subscribe_to_topic(connection, topic, callback_on_message_recieved):
     subscribe_result = subscribe_future.result()
     print("Subscribed with {}".format(str(subscribe_result['qos'])))
 
-async def publish_to_topic(connection, topic, payload):
-    payload_json = json.dumps(payload)
-    print("Publish to topic: " + topic + " with payload: " + payload_json)
-    connection.publish(
-        topic=topic,
-        payload=payload_json,
-        qos=mqtt.QoS.AT_LEAST_ONCE)
-
+async def publish_to_topic(connection, topic, payload, qos : mqtt.QoS):
+    #payload_json = json.dumps(payload)
+    print(f"Publish to topic: {topic} with payload: {payload}")
+    try:
+        connection.publish(
+            topic=topic,
+            payload=payload,
+            qos=qos)
+    except:
+        print("Failed to publish!")
 
 
 """

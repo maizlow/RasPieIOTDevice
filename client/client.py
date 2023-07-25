@@ -1,14 +1,21 @@
-import database, aws_mqtt, variables
+import aws_mqtt
+import config
+from database.local_db import MongoDB
 from modules.logging import Logging
 import time, asyncio, threading, json
 from awscrt import mqtt
+from bson.json_util import dumps, loads
 
 
-TOPIC_PLC_INFO = "iot/device/" + variables.CLIENT_ID + "/plc_info"
-TOPIC_TAGS = "iot/device/" + variables.CLIENT_ID + "/tags"
-TOPIC_JOBS = "iot/device/" + variables.CLIENT_ID + "/jobs"
+CLIENT_ID = config.getClientID()
 
-db = database.DB()
+TOPIC_PLC_INFO = "iot/device/" + CLIENT_ID + "/plc_info"
+TOPIC_TAGS = "iot/device/" + CLIENT_ID + "/tags"
+TOPIC_JOBS = "iot/device/" + CLIENT_ID + "/jobs"
+TOPIC_DATA = "iot/device/" + CLIENT_ID + "/data"
+
+
+db = MongoDB()
 logging_active = False
 plc_update = False
 tag_update = False
@@ -60,7 +67,7 @@ async def main():
     global tag_update
     plc_list = []
     #Establish MQTT connection to AWS
-    con = await aws_mqtt.connect_mqtt()
+    con = await aws_mqtt.connect_mqtt(config.getAWSEndpoint(), CLIENT_ID)
     
     #Subscribe to PLC_INFO, this will insert to DB if not existing or update existing ones
     await aws_mqtt.subscribe_to_topic(con, TOPIC_PLC_INFO + "/#", on_message_received)
@@ -68,16 +75,19 @@ async def main():
     await aws_mqtt.subscribe_to_topic(con, TOPIC_TAGS + "/#", on_message_received)
     
     while(True): 
+        # ids = []
+        # ids.append(1)
+        # db.deleteDataPoints(ids)
         try:    
-            plc_list = db.getAllActivePLC()   
-                
-            if plc_list.__len__() > 0:
-                #When tag list and plc list have data, try to start logging
-                threads = []        
-                logging = []
+            plc_list = db.getAllActivePLC()
+            threads = []  
+            logging = [] 
+            print(len(list(plc_list.clone())))  
+            if len(list(plc_list.clone())) > 0:
+                #When tag list and plc list have data, try to start logging       
                 for plc in plc_list:      
                     tagList = db.getTagsForPLC(plc["ip_address"])
-                    if len(tagList) > 0:
+                    if len(list(tagList.clone())) > 0:
                         log = Logging(tagList, plc["ip_address"], db)
                         logging.append(log)
                         threads.append(threading.Thread(target=log.Logging, daemon=True))
@@ -85,26 +95,48 @@ async def main():
 
             #When we have started at least one thread don't recreate them...                
             while(threads.__len__() > 0):
+                print(f"Number of active threads: {len(threads)}")
                 logging_active = True
                 if tag_update or plc_update:
                     print("Changes to the taglist have been recieved!")
                     plc_list = db.getAllActivePLC() 
                     for plc in plc_list:                              
                         tagList = db.getTagsForPLC(plc["ip_address"])
-                        if len(tagList) > 0:
-                            for log in logging:                          
-                                print(plc["ip_address"] + " ; " + log.plc)
-                                if(log.plc == plc["ip_address"]):
+                        if len(list(tagList.clone())) > 0:
+                            #Update existing logs
+                            logged = False
+                            for log in logging:                                                          
+                                if(log.plc == plc["ip_address"]):                                    
                                     log.UpdateTags(tagList)
-                                # else:
-                                #     print("New thread started!")
-                                #     log = Logging(tagList, plc["ip_address"], db)
-                                #     logging.append(log)
-                                #     threads.append(threading.Thread(target=log.Logging, daemon=True))
-                                #     threads[-1].start()
-                                #     break
+                                    logged = True
+                                
+                            #Start logging if new tags or plc found
+                            if not logged:
+                                print(f"New thread started for plc with IP: {plc['ip_address']}!")
+                                newlog = Logging(tagList, plc["ip_address"], db)
+                                logging.append(newlog)
+                                threads.append(threading.Thread(target=logging[-1].Logging, daemon=True))
+                                threads[-1].start()
+                            
                     tag_update = False
                     plc_update = False
+
+                #Check if tags are logged and publish them to AWS
+                if aws_mqtt.isConnected:
+                    loggedTags = db.getUnpublishedDatapoints()
+                    publishedIds = []
+                    for unpublished in loggedTags:
+                        payload = {
+                            "tag_id": dumps(unpublished["tag_id"]),
+                            "value": unpublished["value"],
+                            "timestamp": unpublished["timestamp"]
+                        }
+                        #await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(payload), mqtt.QoS.AT_LEAST_ONCE)
+                        publishedIds.append(unpublished["_id"])
+
+                    db.deleteDataPoints(publishedIds)
+
+
                 time.sleep(1)
 
 
@@ -112,10 +144,12 @@ async def main():
             time.sleep(10)
 
         except KeyboardInterrupt:
-            for log in logging:
-                log.Stop()
-            for thread in threads:
-                thread.join()
+            if logging:
+                for log in logging:
+                    log.Stop()
+            if threads:    
+                for thread in threads:
+                    thread.join()
             await aws_mqtt.disconnect_mqtt(con)
             print("Exiting...")
             exit()

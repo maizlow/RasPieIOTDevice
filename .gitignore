@@ -1,6 +1,9 @@
 #Personal access token GIT
 # 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
 
+#Files
+config.ini
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

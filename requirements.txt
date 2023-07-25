@@ -1,2 +1,5 @@
 awsiotsdk==1.16.0
-tinydb==4.8.0
+python-snap7
+pymongo
+configparser
+bson

@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "db-nr": 2,
+    "db_nr": 2,
     "start-address": 0,
     "data-type": 7,
     "log-interval": 1,
@@ -10,7 +10,7 @@
   },
   {
     "id": 2,
-    "db-nr": 2,
+    "db_nr": 2,
     "start-address": 4,
     "data-type": 7,
     "log-interval": 10,
@@ -19,7 +19,7 @@
   },
   {
     "id": 3,
-    "db-nr": 2,
+    "db_nr": 2,
     "start-address": 8,
     "data-type": 7,
     "log-interval": 2,
@@ -28,7 +28,7 @@
   },
 {
     "id": 4,
-    "db-nr": 2,
+    "db_nr": 2,
     "start-address": 0,
     "data-type": 7,
     "log-interval": 1,
@@ -37,7 +37,7 @@
   },
   {
     "id": 5,
-    "db-nr": 2,
+    "db_nr": 2,
     "start-address": 4,
     "data-type": 7,
     "log-interval": 10,
@@ -46,7 +46,7 @@
   },
   {
     "id": 6,
-    "db-nr": 2,
+    "db_nr": 2,
     "start-address": 8,
     "data-type": 7,
     "log-interval": 2,
