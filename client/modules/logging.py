@@ -92,6 +92,8 @@ class Logging(object):
     def getByteLength(self, dataType : int) -> int:
         """Returns number of bytes to read depending on data type.
         """
+        print(dataType)
+        print(DataType.Bit)
         if dataType == DataType.Bit: 
             return 1
         elif dataType == DataType.Byte: 
