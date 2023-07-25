@@ -65,8 +65,8 @@ class Logging(object):
                     tag.next_logging = now + tag.log_interval
                     
                     print(f"Logging tag, DB={tag.db_nr}, Start address={tag.start_address}, Data type={tag.data_type} from PLC with IP: {tag.PLC_IP}")
-                    print(f"Size is: {self.getByteLength(tag.data_type)} Data type is: {tag.data_type}")
-                    if self.plc_com.checkConnection() and False:
+                    
+                    if self.plc_com.checkConnection():
                         #Read tag with snap7 and log to database
                         if tag.data_type == DataType.Bit:
                             value = self.plc_com.read_db_bit(tag.db_nr, tag.start_address, tag.bit_nr)
@@ -92,23 +92,21 @@ class Logging(object):
     def getByteLength(self, dataType : int) -> int:
         """Returns number of bytes to read depending on data type.
         """
-        print(dataType)
-        print(DataType.Bit)
-        if dataType == DataType.Bit: 
+        if dataType == int(DataType.Bit): 
             return 1
-        elif dataType == DataType.Byte: 
+        elif dataType == int(DataType.Byte): 
             return 1
-        elif dataType == DataType.Char: 
+        elif dataType == int(DataType.Char): 
             return 1
-        elif dataType == DataType.Word: 
+        elif dataType == int(DataType.Word): 
             return 2
-        elif dataType == DataType.Int: 
+        elif dataType == int(DataType.Int): 
             return 2
-        elif dataType == DataType.DWord: 
+        elif dataType == int(DataType.DWord): 
             return 4
-        elif dataType == DataType.DInt: 
+        elif dataType == int(DataType.DInt): 
             return 4
-        elif dataType == DataType.Real: 
+        elif dataType == int(DataType.Real): 
             return 4
-        elif dataType == DataType.String: 
+        elif dataType == int(DataType.String): 
             return 254
