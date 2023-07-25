@@ -14,12 +14,20 @@ class PLC_Com():
             self.client.connect(
                 self.plc_info.ip, self.plc_info.rack, self.plc_info.slot)
         except:
-            print("Failed to connect to PLC")
+            print("Failed to connect to PLC! Retrying...")
         
-        timed_out = False
         timeout = time.time() + 3 #3 second timeout
-        while not self.client.get_connected() or timed_out:
-            timed_out = time.time() > timeout
+        while not self.client.get_connected():
+            if time.time() > timeout:
+                try:
+                    self.client.connect(
+                        self.plc_info.ip, self.plc_info.rack, self.plc_info.slot)
+                except:
+                    print("Failed to connect to PLC! Retrying...")
+                    #Add another 3 seconds
+                    timeout = time.time() + 3
+            print(f"Retrying again in {timeout - time.time()}s")
+            time.sleep(0.1)
             
         if self.client.get_connected():
             print(f"Connected to plc with IP: {self.plc_info.ip}")
