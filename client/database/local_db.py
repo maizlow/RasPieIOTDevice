@@ -1,13 +1,16 @@
 from pymongo import MongoClient, errors
 from bson import ObjectId
-import config
+import config, platform
 
 class MongoDB():
     def __init__(self) -> None:
         db_config = config.getConfiguredDatabase()
         usernamePassword = config.getMongoAuth()
         #Initiate client
-        conStr = f"mongodb://{usernamePassword[0]}:{usernamePassword[1]}@{db_config.ip}:{db_config.port}"
+        if platform.system() == "Linux":
+            conStr = f"mongodb://{usernamePassword[0]}:{usernamePassword[1]}@{db_config.ip}:{db_config.port}"
+        else:
+            conStr = f"mongodb://{db_config.ip}:{db_config.port}"
         self.client = MongoClient(conStr)
         #Create DB if not exists
         self.db = self.client[db_config.name]

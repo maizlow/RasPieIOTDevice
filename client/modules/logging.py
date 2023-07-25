@@ -13,6 +13,7 @@ class Logging(object):
         self.tags = []
         self.prepareTaglist(tags) 
         self.plc = Plc(plc["_id"], plc["ip_address"], plc["rack"], plc["slot"], plc["active"])
+        print(plc["_id"])
         self.db : MongoDB = db
         self.is_running = True
         self.lock_request = False
