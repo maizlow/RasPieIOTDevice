@@ -14,8 +14,7 @@ class PLC_Com():
             self.client.connect(
                 self.plc_info.ip, self.plc_info.rack, self.plc_info.slot)
         except:
-            print(f"Failed to connect, error code: {self.client.error_text(self.client.get_last_error())}")            
-            exit()        
+            print("Failed to connect to PLC")
         
         timed_out = False
         timeout = time.time() + 3 #3 second timeout
