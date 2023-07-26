@@ -164,7 +164,7 @@ async def main():
                             await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(payload), mqtt.QoS.AT_LEAST_ONCE)
                         
                         publishedIds.append(unpublished["_id"])
-
+                    await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(temp), mqtt.QoS.AT_LEAST_ONCE)
                     with open(variables.ALARM_LOG_CSV_FILEPATH + "/logAsJson.json", 'w', encoding = 'utf-8') as json_file_handler:                
                         json_file_handler.write(json.dumps(temp, indent = 4))
 
