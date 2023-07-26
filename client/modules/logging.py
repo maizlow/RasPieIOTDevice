@@ -1,7 +1,7 @@
 import datetime, random
 import threading
 from datetime import timezone
-from database.models.tag import Tag, DataType
+from database.models.Tag import Tag, DataType
 from database.local_db import MongoDB
 from PLC_Com import PLC_Com
 from database.models.Plc import Plc

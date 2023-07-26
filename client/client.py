@@ -148,7 +148,7 @@ async def main():
         except KeyboardInterrupt:
             if logging:
                 for log in logging:
-                    print(log.plc.ip)
+                    #print(log.plc.ip)
                     log.Stop()
             if threads:    
                 for thread in threads:
