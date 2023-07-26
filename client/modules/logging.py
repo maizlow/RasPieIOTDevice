@@ -7,13 +7,18 @@ from PLC_Com import PLC_Com
 from database.models.Plc import Plc
 
 class Logging(object):
-
+    plc : Plc
+    db : MongoDB
+    is_running : False
+    lock_request : False
+    lock_active : False
+    plc_com : PLC_Com
+    
     def __init__(self, tags, plc : Plc, db):
         #PLC info finns på varje tagg
         self.tags = []
         self.prepareTaglist(tags) 
         self.plc = Plc(plc["_id"], plc["ip_address"], plc["rack"], plc["slot"], plc["active"])
-        print(plc["_id"])
         self.db : MongoDB = db
         self.is_running = True
         self.lock_request = False

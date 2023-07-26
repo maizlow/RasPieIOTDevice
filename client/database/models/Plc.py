@@ -1,4 +1,9 @@
 class Plc():
+    ip : str
+    rack : int
+    slot : int
+    active : bool
+
     def __init__(self, id, ip_address, rack_nr, slot_nr, active):
         self._id = id
         self.ip = ip_address

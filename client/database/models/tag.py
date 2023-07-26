@@ -16,6 +16,13 @@ class DataType(IntEnum):
 class Tag():
     next_logging : float = 0
     next_batching = 0
+    db_nr : int
+    start_address : int
+    data_type : int
+    bit_nr : int
+    log_interval : int
+    batch_interval : int
+    PLC_IP : str
     
     def __init__(self, id, dbNr, startAddr, dataType, bit_nr, logInterval, batchInterval, PLC_IP):
         self._id = id

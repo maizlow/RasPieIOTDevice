@@ -5,7 +5,7 @@ from modules.logging import Logging
 import time, asyncio, threading, json
 from awscrt import mqtt
 from bson.json_util import dumps, loads
-
+from database.models.Plc import Plc
 
 CLIENT_ID = config.getClientID()
 
@@ -82,7 +82,7 @@ async def main():
         try:    
             plc_list = db.getAllActivePLC()
             threads = []  
-            logging = [] 
+            logging = [Logging]
             print(len(list(plc_list.clone())))  
             if len(list(plc_list.clone())) > 0:
                 #When tag list and plc list have data, try to start logging       
@@ -107,7 +107,7 @@ async def main():
                             #Update existing logs
                             logged = False
                             for log in logging:                                                          
-                                if(log.plc == plc["ip_address"]):                                    
+                                if(log.plc.ip == plc["ip_address"]):                                    
                                     log.UpdateTags(tagList)
                                     logged = True
                                 
