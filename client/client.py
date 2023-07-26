@@ -78,8 +78,8 @@ async def main():
                 print(json.dumps(data_dict))
         except:
             print(f"Failed with: {fpath}")
-
-    print(variables.ALARM_LOG_CSV_FILEPATH)
+    return
+    
     global logging_active
     global plc_update
     global tag_update
