@@ -135,7 +135,7 @@ async def main():
                        # await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(payload), mqtt.QoS.AT_LEAST_ONCE)
                         publishedIds.append(unpublished["_id"])
 
-                    db.deleteDataPoints(publishedIds)
+                    #db.deleteDataPoints(publishedIds)
 
 
                 time.sleep(1)
