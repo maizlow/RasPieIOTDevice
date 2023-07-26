@@ -175,7 +175,7 @@ async def main():
                                     "batch-interval": 2,
                                     "PLC_IP": "172.19.33.200"
                                 }}
-                        await aws_mqtt.publish_to_topic(con, TOPIC_DATA, payload, mqtt.QoS.AT_LEAST_ONCE)
+                        await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(payload), mqtt.QoS.AT_LEAST_ONCE)
                         if config.getPublishStatus():
                             await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(payload), mqtt.QoS.AT_LEAST_ONCE)
 
