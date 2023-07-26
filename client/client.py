@@ -146,8 +146,9 @@ async def main():
             time.sleep(10)
 
         except KeyboardInterrupt:
-            if logging.__len__() > 0:
+            if logging:
                 for log in logging:
+                    print("Stopping logging")
                     log.Stop()
             if threads:    
                 for thread in threads:
