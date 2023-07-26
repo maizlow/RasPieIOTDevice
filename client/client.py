@@ -77,8 +77,9 @@ async def main():
                     data_dict[key] = rows
 
                 print(json.dumps(data_dict))
-        except:
+        except Exception as e:
             print(f"Failed with: {fpath}")
+            print(e)
     return
     
     global logging_active
