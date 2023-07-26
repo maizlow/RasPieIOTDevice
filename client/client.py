@@ -158,7 +158,7 @@ async def main():
                             "timestamp": unpublished["timestamp"]
                         }
                         
-                        temp.append(unpublished)
+                        temp.append(payload)
                         
                         if config.getPublishStatus():
                             await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(payload), mqtt.QoS.AT_LEAST_ONCE)
