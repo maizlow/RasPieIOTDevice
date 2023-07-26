@@ -106,7 +106,7 @@ class MongoDB():
                         },
                         'tag_id': {
                             'bsonType': 'objectId'
-                        }#,
+                        },
                         #'value': {
                         #    'bsonType': 'int'
                         #},
