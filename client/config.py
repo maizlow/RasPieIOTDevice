@@ -23,7 +23,10 @@ def getPublishStatus():
     config_obj = configparser.ConfigParser()
     config_obj.read("config.ini")
     cloud = config_obj["cloud"]
-    return bool(cloud["PUBLISH"])
+    if cloud["PUBLISH"] == "False":
+        return False
+    elif cloud["PUBLISH"] == "True":
+        return True
 
 def getMongoAuth():
     config_obj = configparser.ConfigParser()
