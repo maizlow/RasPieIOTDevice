@@ -106,10 +106,10 @@ class MongoDB():
                         },
                         'tag_id': {
                             'bsonType': 'objectId'
-                        },
-                        'value': {
-                            'bsonType': 'int'
-                        },
+                        }#,
+                        #'value': {
+                        #    'bsonType': 'int'
+                        #},
                         'timestamp': {
                             'bsonType': 'double'
                         },
