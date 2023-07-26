@@ -82,15 +82,14 @@ async def main():
         try:    
             plc_list = db.getAllActivePLC()
             threads = []  
-            logging = [Logging]
+            logging = []
             print(len(list(plc_list.clone())))  
             if len(list(plc_list.clone())) > 0:
                 #When tag list and plc list have data, try to start logging       
                 for plc in plc_list:      
                     tagList = db.getTagsForPLC(plc["ip_address"])
                     if len(list(tagList.clone())) > 0:
-                        log = Logging(tagList, plc, db)
-                        logging.append(log)
+                        logging.append(Logging(tagList, plc, db))
                         threads.append(threading.Thread(target=log.Logging, daemon=True))
                         threads[-1].start()
 
