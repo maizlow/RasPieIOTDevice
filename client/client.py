@@ -69,7 +69,7 @@ async def main():
     for fpath in glob.glob(variables.ALARM_LOG_CSV_FILEPATH + "/*.csv"):
         print(fpath)
         try:
-            with open(variables.ALARM_LOG_CSV_FILEPATH + fpath) as csv_file_handler:
+            with open(fpath) as csv_file_handler:
                 csv_reader = csv.DictReader(csv_file_handler)
 
                 for rows in csv_reader:
