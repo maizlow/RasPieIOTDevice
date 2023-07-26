@@ -65,7 +65,7 @@ def new_tag_message(topic, payload):
 
 async def main():
     data_dict = {}
-    print(glob.glob("AlarmLog*.csv"))
+    print(glob.glob(variables.ALARM_LOG_CSV_FILEPATH + "AlarmLog*.csv"))
     for fpath in glob.glob("AlarmLog*.csv"):
         try:
             with open(variables.ALARM_LOG_CSV_FILEPATH + fpath, encoding="utf-8") as csv_file_handler:
