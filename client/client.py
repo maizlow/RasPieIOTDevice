@@ -77,10 +77,15 @@ async def main():
                     key = rows["Time_ms"]
                     data_dict[key] = rows
 
-                print(json.dumps(data_dict))
+            with open(variables.ALARM_LOG_CSV_FILEPATH + "/logAsJson.json", 'w', encoding = 'utf-8') as json_file_handler:                
+                json_file_handler.write(json.dumps(data_dict, indent = 4))
+
+            
         except Exception as e:
             print(f"Failed with: {fpath}")
             print(e)
+
+    
     return
     
     global logging_active
