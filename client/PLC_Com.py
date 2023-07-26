@@ -71,6 +71,7 @@ class PLC_Com():
     def read_db_bit(self, dbNumber, startByte, bit):
         if self.checkConnection():
             read = self.client.db_read(dbNumber, startByte, 1)
+            print(read)
             if read:              
                 return snap7.util.get_bool(read, 0, bit)
             else:
