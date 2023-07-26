@@ -1,5 +1,5 @@
 from database.models.Plc import Plc
-from database.models.tag import DataType
+from database.models.Tag import DataType
 import snap7
 import time, math
 

@@ -1,5 +1,3 @@
-import json
-from datetime import datetime, timezone
 from enum import IntEnum        
 
 class DataType(IntEnum):
@@ -33,13 +31,3 @@ class Tag():
         self.log_interval = logInterval
         self.batch_interval = batchInterval
         self.PLC_IP = PLC_IP
-
-    
-
-    
-# class LoggedTag():
-#     def __init__(self, id, value, PLC_IP) -> None:
-#         self.id = id
-#         self.value = value
-#         self.PLC_IP = PLC_IP
-#         self.timestamp = datetime.now(timezone.utc).isoformat()
