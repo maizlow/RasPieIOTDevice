@@ -156,28 +156,29 @@ async def main():
                             "value": unpublished["value"],
                             "timestamp": unpublished["timestamp"]
                         }
+                        payload = [
+                                {
+                                    "db_nr": 4,
+                                    "start-address": 0,
+                                    "data-type": 7,
+                                    "bit_nr": 0,
+                                    "log-interval": 1,
+                                    "batch-interval": 2,
+                                    "PLC_IP": "172.19.33.200"
+                                },
+                                {
+                                    "db_nr": 4,
+                                    "start-address": 4,
+                                    "data-type": 1,
+                                    "bit_nr": 0,
+                                    "log-interval": 1,
+                                    "batch-interval": 2,
+                                    "PLC_IP": "172.19.33.200"
+                                }]
+                        await aws_mqtt.publish_to_topic(con, TOPIC_DATA, payload, mqtt.QoS.AT_LEAST_ONCE)
                         if config.getPublishStatus():
-                            payload = [
-                                    {
-                                        "db_nr": 4,
-                                        "start-address": 0,
-                                        "data-type": 7,
-                                        "bit_nr": 0,
-                                        "log-interval": 1,
-                                        "batch-interval": 2,
-                                        "PLC_IP": "172.19.33.200"
-                                    },
-                                    {
-                                        "db_nr": 4,
-                                        "start-address": 4,
-                                        "data-type": 1,
-                                        "bit_nr": 0,
-                                        "log-interval": 1,
-                                        "batch-interval": 2,
-                                        "PLC_IP": "172.19.33.200"
-                                    }]
-                            await aws_mqtt.publish_to_topic(con, TOPIC_DATA, payload, mqtt.QoS.AT_LEAST_ONCE)
-                            #await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(payload), mqtt.QoS.AT_LEAST_ONCE)
+                            await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(payload), mqtt.QoS.AT_LEAST_ONCE)
+                            
                         with open(variables.ALARM_LOG_CSV_FILEPATH + "/logAsJson.json", 'w', encoding = 'utf-8') as json_file_handler:                
                             json_file_handler.write(json.dumps(payload, indent = 4))
                         publishedIds.append(unpublished["_id"])
