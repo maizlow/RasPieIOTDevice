@@ -64,6 +64,7 @@ def new_tag_message(topic, payload):
 
 
 async def main():
+    """
     data_dict = {}
     print(variables.ALARM_LOG_CSV_FILEPATH)
     for fpath in glob.glob(variables.ALARM_LOG_CSV_FILEPATH + "/*.csv"):
@@ -87,7 +88,7 @@ async def main():
 
     
     return
-    
+    """
     global logging_active
     global plc_update
     global tag_update
@@ -157,6 +158,8 @@ async def main():
                         }
                         if config.getPublishStatus():
                             await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(payload), mqtt.QoS.AT_LEAST_ONCE)
+                        with open(variables.ALARM_LOG_CSV_FILEPATH + "/logAsJson.json", 'w', encoding = 'utf-8') as json_file_handler:                
+                            json_file_handler.write(json.dumps(payload, indent = 4))
                         publishedIds.append(unpublished["_id"])
 
                     db.deleteDataPoints(publishedIds)
