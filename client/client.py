@@ -73,7 +73,6 @@ async def main():
                 csv_reader = csv.DictReader(csv_file_handler)
                 i = 1
                 for rows in csv_reader:
-                    print(rows["Time_ms"])
                     key = i
                     data_dict[key] = rows
                     i += 1
