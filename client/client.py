@@ -148,7 +148,7 @@ async def main():
         except KeyboardInterrupt:
             if logging:
                 for log in logging:
-                    print("Stopping logging")
+                    print(log)
                     log.Stop()
             if threads:    
                 for thread in threads:
