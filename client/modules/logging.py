@@ -9,11 +9,11 @@ from database.models.Plc import Plc
 class Logging(object):
     plc : Plc
     db : MongoDB
-    is_running : False
-    lock_request : False
-    lock_active : False
+    is_running : bool
+    lock_request : bool
+    lock_active : bool
     plc_com : PLC_Com
-    
+
     def __init__(self, tags, plc : Plc, db):
         #PLC info finns på varje tagg
         self.tags = []
