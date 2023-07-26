@@ -48,7 +48,6 @@ class PLC_Com():
         if dataType == DataType.Bit or dataType == DataType.String:
             return None
         if self.checkConnection():
-            print(f"Size: {byteLength}")
             read = self.client.db_read(dbNumber, startByte, byteLength)
             if read:              
                 if dataType == DataType.Byte: 

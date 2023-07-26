@@ -6,6 +6,7 @@ import time, asyncio, threading, json
 from awscrt import mqtt
 from bson.json_util import dumps, loads
 from database.models.Plc import Plc
+import variables
 
 CLIENT_ID = config.getClientID()
 
@@ -63,6 +64,7 @@ def new_tag_message(topic, payload):
 
 
 async def main():
+    print(variables.ALARM_LOG_CSV_FILEPATH)
     global logging_active
     global plc_update
     global tag_update
