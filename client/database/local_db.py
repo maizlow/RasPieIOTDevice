@@ -108,7 +108,7 @@ class MongoDB():
                             'bsonType': 'objectId'
                         },
                         'value': {
-                           'bsonType': 'mixed'
+                           'bsonType': 'bool' | 'int' | 'double' | 'string' | 'long'
                         },
                         'timestamp': {
                             'bsonType': 'double'
