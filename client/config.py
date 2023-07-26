@@ -19,6 +19,12 @@ def getClientID():
     cloud = config_obj["cloud"]
     return cloud["CLIENT_ID"]
 
+def getPublishStatus():
+    config_obj = configparser.ConfigParser()
+    config_obj.read("config.ini")
+    cloud = config_obj["cloud"]
+    return bool(cloud["PUBLISH"])
+
 def getMongoAuth():
     config_obj = configparser.ConfigParser()
     config_obj.read("config.ini")
