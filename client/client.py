@@ -1,4 +1,4 @@
-import aws_mqtt
+import aws_mqtt, glob, csv, json
 import config
 from database.local_db import MongoDB
 from modules.logging import Logging
@@ -64,6 +64,20 @@ def new_tag_message(topic, payload):
 
 
 async def main():
+    data_dict = {}
+    for fpath in glob.glob("AlarmLog*.csv"):
+        try:
+            with open(variables.ALARM_LOG_CSV_FILEPATH + fpath, encoding="utf-8") as csv_file_handler:
+                csv_reader = csv.DictReader(csv_file_handler)
+
+                for rows in csv_reader:
+                    key = rows["Time_ms"]
+                    data_dict[key] = rows
+
+                print(json.dumps(data_dict))
+        except:
+            print(f"Failed with: {fpath}")
+
     print(variables.ALARM_LOG_CSV_FILEPATH)
     global logging_active
     global plc_update
