@@ -201,12 +201,11 @@ class MongoDB():
 ###########################################################
 
     def insertDataPoint(self, tag_id, value, timestamp):
-        col = self.db["Data"]
-        print(f"Value: {int(value)}, Timestamp: {timestamp}, Tag_ID: {tag_id}")
+        col = self.db["Data"]        
         try:         
             col.insert_one({
                 "tag_id": ObjectId(tag_id),
-                "value": int(value),
+                "value": value,
                 "timestamp": timestamp,
                 "published": False
             })
