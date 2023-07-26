@@ -150,18 +150,23 @@ async def main():
                 if aws_mqtt.isConnected:
                     loggedTags = db.getUnpublishedDatapoints()
                     publishedIds = []
+                    temp = []
                     for unpublished in loggedTags:
                         payload = {
                             "tag_id": dumps(unpublished["tag_id"]),
                             "value": unpublished["value"],
                             "timestamp": unpublished["timestamp"]
                         }
+                        
+                        temp.append(unpublished)
+                        
                         if config.getPublishStatus():
                             await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(payload), mqtt.QoS.AT_LEAST_ONCE)
-
-                        with open(variables.ALARM_LOG_CSV_FILEPATH + "/logAsJson.json", 'w', encoding = 'utf-8') as json_file_handler:                
-                            json_file_handler.write(json.dumps(loggedTags, indent = 4))
+                        
                         publishedIds.append(unpublished["_id"])
+
+                    with open(variables.ALARM_LOG_CSV_FILEPATH + "/logAsJson.json", 'w', encoding = 'utf-8') as json_file_handler:                
+                        json_file_handler.write(json.dumps(temp, indent = 4))
 
                     db.deleteDataPoints(publishedIds)
 
