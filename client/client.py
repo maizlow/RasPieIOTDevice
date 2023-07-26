@@ -71,11 +71,12 @@ async def main():
         try:
             with open(fpath) as csv_file_handler:
                 csv_reader = csv.DictReader(csv_file_handler)
-
+                i = 1
                 for rows in csv_reader:
                     print(rows["Time_ms"])
-                    key = rows["Time_ms"]
+                    key = i
                     data_dict[key] = rows
+                    i += 1
 
             with open(variables.ALARM_LOG_CSV_FILEPATH + "/logAsJson.json", 'w', encoding = 'utf-8') as json_file_handler:                
                 json_file_handler.write(json.dumps(data_dict, indent = 4))
