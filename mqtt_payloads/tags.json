@@ -7,5 +7,68 @@
     "log-interval": 1,
     "batch-interval": 2,
     "PLC_IP": "172.19.33.200"
+  },
+  {
+    "db_nr": 4,
+    "start-address": 4,
+    "data-type": 1,
+    "bit_nr": 0,
+    "log-interval": 1,
+    "batch-interval": 2,
+    "PLC_IP": "172.19.33.200"
+  },
+  {
+    "db_nr": 4,
+    "start-address": 6,
+    "data-type": 5,
+    "bit_nr": 0,
+    "log-interval": 1,
+    "batch-interval": 2,
+    "PLC_IP": "172.19.33.200"
+  },
+  {
+    "db_nr": 4,
+    "start-address": 8,
+    "data-type": 3,
+    "bit_nr": 0,
+    "log-interval": 1,
+    "batch-interval": 2,
+    "PLC_IP": "172.19.33.200"
+  },
+  {
+    "db_nr": 4,
+    "start-address": 10,
+    "data-type": 9,
+    "bit_nr": 0,
+    "log-interval": 1,
+    "batch-interval": 2,
+    "PLC_IP": "172.19.33.200"
+  },
+  {
+    "db_nr": 4,
+    "start-address": 266,
+    "data-type": 1,
+    "bit_nr": 0,
+    "log-interval": 1,
+    "batch-interval": 2,
+    "PLC_IP": "172.19.33.200"
+  },
+  {
+    "db_nr": 4,
+    "start-address": 266,
+    "data-type": 1,
+    "bit_nr": 1,
+    "log-interval": 1,
+    "batch-interval": 2,
+    "PLC_IP": "172.19.33.200"
+  },
+  {
+    "db_nr": 4,
+    "start-address": 266,
+    "data-type": 1,
+    "bit_nr": 2,
+    "log-interval": 1,
+    "batch-interval": 2,
+    "PLC_IP": "172.19.33.200"
   }
 ]

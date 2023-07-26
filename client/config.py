@@ -16,7 +16,8 @@ def getAWSEndpoint():
 def getClientID():
     config_obj = configparser.ConfigParser()
     config_obj.read("config.ini")
-    return config_obj["cloud"]["CLIENT_ID"]
+    cloud = config_obj["cloud"]
+    return cloud["CLIENT_ID"]
 
 def getMongoAuth():
     config_obj = configparser.ConfigParser()
