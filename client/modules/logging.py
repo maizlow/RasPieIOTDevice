@@ -75,7 +75,7 @@ class Logging(object):
                         else:
                             value = self.plc_com.read_db_value(tag.db_nr, tag.start_address, self.getByteLength(tag.data_type), tag.data_type)
                         
-                        if value:
+                        if not value is None:
                             self.db.insertDataPoint(tag._id, value, now)
                         else:
                             print("ERROR: Payload not configured correctly, no variable found on PLC with the attributes!")
