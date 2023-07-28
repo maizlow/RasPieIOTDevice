@@ -160,7 +160,7 @@ async def main():
                         
                         if config.getPublishStatus():
                             await aws_mqtt.publish_to_topic(con, TOPIC_DATA, dumps(payload), mqtt.QoS.AT_LEAST_ONCE)
-                        
+                        #Test
                         publishedIds.append(unpublished["_id"])
                     
                     db.deleteDataPoints(publishedIds)
