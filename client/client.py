@@ -153,7 +153,8 @@ async def main():
                     for unpublished in loggedTags:
                         payload = {
                             "tag_id": dumps(unpublished["tag_id"]),
-                            "value": unpublished["value"],
+                            "value_dt": str.split(str(type(unpublished["value"])), "'")[1],
+                            "value": str(unpublished["value"]),
                             "timestamp": unpublished["timestamp"]
                         }                                              
                         
