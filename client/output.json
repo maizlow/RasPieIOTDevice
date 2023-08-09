@@ -1,0 +1,206 @@
+[
+  {
+    "_id": { "$oid": "64d39747157c149488998c4e" },
+    "__typename": "Tag",
+    "loginterval": 30,
+    "createdAt": "2023-08-08T11:43:51.048Z",
+    "tagDatatypeId": "99b5d6e1-ea27-4982-81fd-cd2fa56bb1ec",
+    "startaddress": 266,
+    "tagPlcId": "89efe345-182e-4b2d-b09e-fecd2d850a8d",
+    "bitnumber": 2,
+    "updatedAt": "2023-08-08T11:43:51.048Z",
+    "batchInterval": 1,
+    "description": "Bit 4",
+    "id": "7532bf56-1a3b-4695-8dae-add1c077029a",
+    "dbnumber": 4,
+    "datatype": [
+      {
+        "_id": { "$oid": "64d3a519a463666135bc3566" },
+        "__typename": "Datatype",
+        "updatedAt": "2023-08-02T05:31:47.008Z",
+        "identifier": 1,
+        "createdAt": "2023-08-02T05:31:47.008Z",
+        "id": "99b5d6e1-ea27-4982-81fd-cd2fa56bb1ec",
+        "name": "Bool"
+      }
+    ]
+  },
+  {
+    "_id": { "$oid": "64d39747157c149488998c4f" },
+    "__typename": "Tag",
+    "loginterval": 1,
+    "updatedAt": "2023-08-08T11:43:51.030Z",
+    "createdAt": "2023-08-08T11:43:51.030Z",
+    "batchInterval": 1,
+    "description": "Data",
+    "id": "8c680818-2aee-4098-9e3f-02850342cc15",
+    "tagDatatypeId": "c19377af-9659-4899-a294-83cfa7f05a9b",
+    "dbnumber": 4,
+    "startaddress": 0,
+    "tagPlcId": "89efe345-182e-4b2d-b09e-fecd2d850a8d",
+    "datatype": [
+      {
+        "_id": { "$oid": "64d3a519a463666135bc3568" },
+        "__typename": "Datatype",
+        "updatedAt": "2023-08-02T05:33:32.951Z",
+        "identifier": 7,
+        "createdAt": "2023-08-02T05:33:32.951Z",
+        "id": "c19377af-9659-4899-a294-83cfa7f05a9b",
+        "name": "DInt"
+      }
+    ]
+  },
+  {
+    "_id": { "$oid": "64d39747157c149488998c50" },
+    "__typename": "Tag",
+    "loginterval": 30,
+    "createdAt": "2023-08-08T11:43:51.030Z",
+    "tagDatatypeId": "99b5d6e1-ea27-4982-81fd-cd2fa56bb1ec",
+    "startaddress": 266,
+    "tagPlcId": "89efe345-182e-4b2d-b09e-fecd2d850a8d",
+    "bitnumber": 1,
+    "updatedAt": "2023-08-08T11:43:51.030Z",
+    "batchInterval": 1,
+    "description": "Bit 3",
+    "id": "960211e2-b49a-4796-a53c-081bfac74492",
+    "dbnumber": 4,
+    "datatype": [
+      {
+        "_id": { "$oid": "64d3a519a463666135bc3566" },
+        "__typename": "Datatype",
+        "updatedAt": "2023-08-02T05:31:47.008Z",
+        "identifier": 1,
+        "createdAt": "2023-08-02T05:31:47.008Z",
+        "id": "99b5d6e1-ea27-4982-81fd-cd2fa56bb1ec",
+        "name": "Bool"
+      }
+    ]
+  },
+  {
+    "_id": { "$oid": "64d39747157c149488998c51" },
+    "__typename": "Tag",
+    "loginterval": 10,
+    "createdAt": "2023-08-08T11:43:51.027Z",
+    "tagDatatypeId": "99b5d6e1-ea27-4982-81fd-cd2fa56bb1ec",
+    "startaddress": 4,
+    "tagPlcId": "89efe345-182e-4b2d-b09e-fecd2d850a8d",
+    "bitnumber": 0,
+    "updatedAt": "2023-08-08T11:43:51.027Z",
+    "batchInterval": 1,
+    "description": "Bit",
+    "id": "da37a373-08f1-4aec-a533-19712e366448",
+    "dbnumber": 4,
+    "datatype": [
+      {
+        "_id": { "$oid": "64d3a519a463666135bc3566" },
+        "__typename": "Datatype",
+        "updatedAt": "2023-08-02T05:31:47.008Z",
+        "identifier": 1,
+        "createdAt": "2023-08-02T05:31:47.008Z",
+        "id": "99b5d6e1-ea27-4982-81fd-cd2fa56bb1ec",
+        "name": "Bool"
+      }
+    ]
+  },
+  {
+    "_id": { "$oid": "64d39747157c149488998c52" },
+    "__typename": "Tag",
+    "loginterval": 30,
+    "updatedAt": "2023-08-08T11:43:51.054Z",
+    "createdAt": "2023-08-08T11:43:51.054Z",
+    "batchInterval": 1,
+    "description": "Val",
+    "id": "a71bbb9f-b497-458e-adcc-52a8cc9211b4",
+    "tagDatatypeId": "e0cc2acf-b416-4db3-93fc-9136a12f0a92",
+    "dbnumber": 4,
+    "startaddress": 6,
+    "tagPlcId": "89efe345-182e-4b2d-b09e-fecd2d850a8d",
+    "datatype": [
+      {
+        "_id": { "$oid": "64d3a519a463666135bc356e" },
+        "__typename": "Datatype",
+        "updatedAt": "2023-08-02T05:33:14.205Z",
+        "identifier": 5,
+        "createdAt": "2023-08-02T05:33:14.205Z",
+        "id": "e0cc2acf-b416-4db3-93fc-9136a12f0a92",
+        "name": "Int"
+      }
+    ]
+  },
+  {
+    "_id": { "$oid": "64d39747157c149488998c53" },
+    "__typename": "Tag",
+    "loginterval": 60,
+    "updatedAt": "2023-08-08T11:43:51.027Z",
+    "createdAt": "2023-08-08T11:43:51.027Z",
+    "batchInterval": 1,
+    "description": "string",
+    "id": "42faa649-faaf-4a87-b6c9-385f8848822f",
+    "tagDatatypeId": "13842837-ed49-4d31-a9d1-6ab1c4b94a77",
+    "dbnumber": 4,
+    "startaddress": 10,
+    "tagPlcId": "89efe345-182e-4b2d-b09e-fecd2d850a8d",
+    "datatype": [
+      {
+        "_id": { "$oid": "64d3a519a463666135bc356a" },
+        "__typename": "Datatype",
+        "updatedAt": "2023-08-02T05:33:51.362Z",
+        "identifier": 9,
+        "createdAt": "2023-08-02T05:33:51.362Z",
+        "id": "13842837-ed49-4d31-a9d1-6ab1c4b94a77",
+        "name": "String"
+      }
+    ]
+  },
+  {
+    "_id": { "$oid": "64d39747157c149488998c54" },
+    "__typename": "Tag",
+    "loginterval": 30,
+    "createdAt": "2023-08-08T11:43:50.984Z",
+    "tagDatatypeId": "99b5d6e1-ea27-4982-81fd-cd2fa56bb1ec",
+    "startaddress": 266,
+    "tagPlcId": "89efe345-182e-4b2d-b09e-fecd2d850a8d",
+    "bitnumber": 0,
+    "updatedAt": "2023-08-08T11:43:50.984Z",
+    "batchInterval": 1,
+    "description": "Bit 2",
+    "id": "4f048ea6-500c-4491-ac69-7a03d4d99df1",
+    "dbnumber": 4,
+    "datatype": [
+      {
+        "_id": { "$oid": "64d3a519a463666135bc3566" },
+        "__typename": "Datatype",
+        "updatedAt": "2023-08-02T05:31:47.008Z",
+        "identifier": 1,
+        "createdAt": "2023-08-02T05:31:47.008Z",
+        "id": "99b5d6e1-ea27-4982-81fd-cd2fa56bb1ec",
+        "name": "Bool"
+      }
+    ]
+  },
+  {
+    "_id": { "$oid": "64d39747157c149488998c55" },
+    "__typename": "Tag",
+    "loginterval": 60,
+    "updatedAt": "2023-08-08T11:43:51.027Z",
+    "createdAt": "2023-08-08T11:43:51.027Z",
+    "batchInterval": 1,
+    "description": "Char",
+    "id": "d608732f-7055-4992-8665-cb669112d2b9",
+    "tagDatatypeId": "dfdd8a89-fad6-4a5f-a8c7-1be6ad5a928d",
+    "dbnumber": 4,
+    "startaddress": 8,
+    "tagPlcId": "89efe345-182e-4b2d-b09e-fecd2d850a8d",
+    "datatype": [
+      {
+        "_id": { "$oid": "64d3a519a463666135bc356d" },
+        "__typename": "Datatype",
+        "updatedAt": "2023-08-02T05:33:00.331Z",
+        "identifier": 3,
+        "createdAt": "2023-08-02T05:33:00.331Z",
+        "id": "dfdd8a89-fad6-4a5f-a8c7-1be6ad5a928d",
+        "name": "Char"
+      }
+    ]
+  }
+]

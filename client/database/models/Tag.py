@@ -20,14 +20,14 @@ class Tag():
     bit_nr : int
     log_interval : int
     batch_interval : int
-    PLC_IP : str
+    plc_id : str
     
-    def __init__(self, id, dbNr, startAddr, dataType, bit_nr, logInterval, batchInterval, PLC_IP):
-        self._id = id
+    def __init__(self, id, dbNr, startAddr, dataType, bit_nr, logInterval, batchInterval, plc_id):
+        self.id = id
         self.db_nr = dbNr
         self.start_address = startAddr
         self.data_type = dataType
         self.bit_nr = bit_nr
         self.log_interval = logInterval
         self.batch_interval = batchInterval
-        self.PLC_IP = PLC_IP
+        self.plc_id = plc_id

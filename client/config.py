@@ -13,6 +13,12 @@ def getAWSEndpoint():
     config_obj.read("config.ini")
     return config_obj["cloud"]["AWS_ENDPOINT"]
 
+def getThingName():
+    config_obj = configparser.ConfigParser()
+    config_obj.read("config.ini")
+    cloud = config_obj["cloud"]
+    return cloud["THING_NAME"]
+
 def getClientID():
     config_obj = configparser.ConfigParser()
     config_obj.read("config.ini")

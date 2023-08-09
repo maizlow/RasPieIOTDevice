@@ -1,4 +1,4 @@
-import aws_mqtt, glob, csv, json
+import aws_mqtt, glob, csv
 import config
 from database.local_db import MongoDB
 from modules.logging import Logging
@@ -8,12 +8,14 @@ from bson.json_util import dumps, loads
 from database.models.Plc import Plc
 import variables
 
+THING_NAME = config.getThingName()
 CLIENT_ID = config.getClientID()
 
-TOPIC_PLC_INFO = "iot/device/" + CLIENT_ID + "/plc_info"
-TOPIC_TAGS = "iot/device/" + CLIENT_ID + "/tags"
-TOPIC_JOBS = "iot/device/" + CLIENT_ID + "/jobs"
-TOPIC_DATA = "iot/device/" + CLIENT_ID + "/data"
+TOPIC_PLC_INFO = "iot/device/" + THING_NAME + "/plc_info"
+TOPIC_TAGS = "iot/device/" + THING_NAME + "/tags"
+TOPIC_DATATYPES = "iot/device/" + THING_NAME + "/datatypes"
+TOPIC_JOBS = "iot/device/" + THING_NAME + "/jobs"
+TOPIC_DATA = "iot/device/" + THING_NAME + "/data"
 
 
 db = MongoDB()
@@ -27,12 +29,14 @@ tag_update = False
 # Callback when the subscribed topic receives a message
 def on_message_received(topic, payload, dup, qos, retain, **kwargs):
     #print("Received message from topic '{}': {}".format(topic, json.loads(payload)))
-    print("Received message from topic '{}': {}".format(topic, payload))
+    #print("Received message from topic '{}': {}".format(topic, payload))
     json_payload = json.loads(payload)
     if TOPIC_PLC_INFO in topic:
         new_plc_message(topic, json_payload)
     elif TOPIC_TAGS in topic:
         new_tag_message(topic, json_payload)
+    elif TOPIC_DATATYPES in topic:
+        new_datatypes_message(topic, json_payload)
     elif TOPIC_JOBS in topic:
         pass
 
@@ -41,12 +45,12 @@ def new_plc_message(topic, payload):
     if logging_active:
         plc_update = True
     if "delete" in topic:
-        if db.deletePLC(payload["ip_address"]):
-            print("Successfully removed PLC with IP-address: ", payload["ip_address"])
+        if db.deletePLC(payload["ip"]):
+            print("Successfully removed PLC with IP-address: ", payload["ip"])
         else:
-            print("Failed to remove PLC with IP-address: '{}' No PLC found with this ip-address!".format(payload["ip_address"]))
+            print("Failed to remove PLC with IP-address: '{}' No PLC found with this ip-address!".format(payload["ip"]))
     else:
-        if db.insertPLC(payload):
+        if db.UpsertPLCs(payload):#db.InsertPLCs(payload):
             print("Successfully inserted/updated PLC info")
         else:
             print("Failed to insert/update PLC info")
@@ -56,12 +60,16 @@ def new_tag_message(topic, payload):
     if logging_active:
         tag_update = True
     if "list" in topic:
-        if db.dropAndInsertTags(payload):
-            print("Successfully inserted tag list")
+        if db.UpsertTags(payload):
+            print("Successfully inserted / updated tag list")
         else:
             print("Failed to insert tag list!")
     
-
+def new_datatypes_message(topic, payload):
+    if db.dropAndInsertDatatypes(payload):
+        print("Successfully inserted new datatypes")
+    else:
+        print("Faild to insert new datatypes")
 
 async def main():
     """
@@ -94,8 +102,10 @@ async def main():
     global tag_update
     plc_list = []
     #Establish MQTT connection to AWS
-    con = await aws_mqtt.connect_mqtt(config.getAWSEndpoint(), CLIENT_ID)
+    con = await aws_mqtt.connect_mqtt(config.getAWSEndpoint(), THING_NAME)
     
+    #Subscribe to Datatypes, this will insert to DB if not existing or update existing ones
+    await aws_mqtt.subscribe_to_topic(con, TOPIC_DATATYPES, on_message_received)
     #Subscribe to PLC_INFO, this will insert to DB if not existing or update existing ones
     await aws_mqtt.subscribe_to_topic(con, TOPIC_PLC_INFO + "/#", on_message_received)
     #Subscribe to TAGS, this will insert to DB if not existing or update existing ones
@@ -109,12 +119,13 @@ async def main():
             plc_list = db.getAllActivePLC()
             threads = []  
             logging = []
-            print(len(list(plc_list.clone())))  
-            if len(list(plc_list.clone())) > 0:
+            if len(list(plc_list.clone())) > 0 and db.CountDatatypes() >= 9:
                 #When tag list and plc list have data, try to start logging       
                 for plc in plc_list:      
-                    tagList = db.getTagsForPLC(plc["ip_address"])
-                    if len(list(tagList.clone())) > 0:
+                    tagList = db.getTagsForPLC2(plc["id"])
+                    
+                    if len(tagList) > 0:
+                        print("Taglist length is:", len(tagList))
                         logging.append(Logging(tagList, plc, db))
                         threads.append(threading.Thread(target=logging[-1].Logging, daemon=True))
                         threads[-1].start()
@@ -127,18 +138,18 @@ async def main():
                     print("Changes to the taglist have been recieved!")
                     plc_list = db.getAllActivePLC() 
                     for plc in plc_list:                              
-                        tagList = db.getTagsForPLC(plc["ip_address"])
-                        if len(list(tagList.clone())) > 0:
+                        tagList = db.getTagsForPLC2(plc["id"])
+                        if len(tagList) > 0:
                             #Update existing logs
                             logged = False
                             for log in logging:                                                          
-                                if(log.plc.ip == plc["ip_address"]):                                    
+                                if(log.plc.ip == plc["id"]):                                    
                                     log.UpdateTags(tagList)
                                     logged = True
                                 
                             #Start logging if new tags or plc found
                             if not logged:
-                                print(f"New thread started for plc with IP: {plc['ip_address']}!")
+                                print(f"New thread started for plc with IP: {plc['ip']}!")
                                 logging.append(Logging(tagList, plc, db))
                                 threads.append(threading.Thread(target=logging[-1].Logging, daemon=True))
                                 threads[-1].start()

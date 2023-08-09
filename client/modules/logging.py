@@ -18,7 +18,7 @@ class Logging(object):
         #PLC info finns på varje tagg
         self.tags = []
         self.prepareTaglist(tags) 
-        self.plc = Plc(plc["_id"], plc["ip_address"], plc["rack"], plc["slot"], plc["active"])
+        self.plc = Plc(plc["id"], plc["ip"], plc["rack"], plc["slot"], plc["active"], plc["description"])
         self.db : MongoDB = db
         self.is_running = True
         self.lock_request = False
@@ -50,12 +50,15 @@ class Logging(object):
     def prepareTaglist(self, taglist):
         self.tags.clear()
         for tag in taglist:
-            tag : Tag
             #print(tag["PLC"][0])
             newTag : Tag
             #Exempel på hur man kommer in i de aggregerade datan
             #print(tag['PLC'][0]['IP-address'])
-            newTag = Tag(str(tag["_id"]), tag["db_nr"], tag["start-address"], tag["data-type"], tag["bit_nr"], tag["log-interval"], tag["batch-interval"], tag["PLC_IP"])            
+            print(tag)
+            if(tag["datatype"][0]["name"] == "Bool"):
+                newTag = Tag(str(tag["id"]), tag["dbnumber"], tag["startaddress"], tag["datatype"][0]["identifier"], tag["bitnumber"], tag["loginterval"], tag["batchInterval"], tag["tagPlcId"])            
+            else:
+                newTag = Tag(str(tag["id"]), tag["dbnumber"], tag["startaddress"], tag["datatype"][0]["identifier"], -1, tag["loginterval"], tag["batchInterval"], tag["tagPlcId"])            
             self.tags.append(newTag)
         print("Tag list is prepared for logging!")
 
